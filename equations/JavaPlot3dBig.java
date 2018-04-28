@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.lang.Math;
+import java.math.*;
 
 public class JavaPlot3d extends JFrame {
    public JavaPlot3d()
@@ -39,6 +40,7 @@ public class JavaPlot3d extends JFrame {
           iRed = 0; iGreen = 0; iBlue = 0;
           rgb = hex(funct(x,y));
           //get the z value
+          /*
           iGreen = ((int)funct(x,y));
           //fix bounds with other colors
           if (iGreen>255){
@@ -56,6 +58,7 @@ public class JavaPlot3d extends JFrame {
           if(funct(x,y) == 1){//color one
             iRed = 127; iGreen = 127; iBlue = 127;
           }
+          */
           //g.setColor(new Color(iRed,iGreen,iBlue));
           g.setColor(new Color(rgb[0],rgb[1],rgb[2]));
           g.drawLine(x-posx,y+30-posy,x-posx,y+30-posy);
@@ -75,26 +78,23 @@ public class JavaPlot3d extends JFrame {
     }
 
   }
-  public double funct(int inx,int iny){
-    double x=((double)inx)*scale;
-    double y=((double)iny)*scale;
-
-    return((
-      /*
-      (int)  Math.sqrt(
-              (double)(y*y + x*x)
-              )
-              *2
-      *255/400
-      */
-      Math.pow(x,y)
-      //x*y
-
-    ));
+  public BigDecimal funct(int inx,int iny){
+    BigDecimal x=new BigDecimal(inx);
+    BigDecimal y=new BigDecimal(iny);
+    x =x.multiply(BigDecimal.valueOf(scale));
+    y =y.multiply(BigDecimal.valueOf(scale));
+    MathContext mc = new MathContext(4);
+    BigDecimal z=new BigDecimal("1");
+    try{
+      z = x.pow(y.intValue(),mc);
+    }catch (Exception e) {
+      z = BigDecimal.valueOf(0);
+    }
+    return(z);
   }
-  public int[] hex(double z){
+  public int[] hex(BigDecimal z){
     int[] rgbtmp = {0,0,0};
-    int iz = (int) z;
+    int iz = z.intValue();
     /*if(z<0){
       z = 256*256*256-z;
     }
