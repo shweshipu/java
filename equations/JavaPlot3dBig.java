@@ -1,4 +1,4 @@
-// use java JavaPlot3d 1 0 0
+// use java JavaPlot3dBig 1 0 0
 //if it doesnt draw blue lines at 0,0 and u get alot of yellow just re run
 
 
@@ -10,9 +10,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.lang.Math;
 import java.math.*;
+import lib.*;
 
-public class JavaPlot3d extends JFrame {
-   public JavaPlot3d()
+public class JavaPlot3dBig extends JFrame {
+   public JavaPlot3dBig()
    {
       super( "Java Plot" );
       setSize(dimx,dimy + 30);
@@ -78,6 +79,9 @@ public class JavaPlot3d extends JFrame {
     }
 
   }
+
+
+
   public BigDecimal funct(int inx,int iny){
     BigDecimal x=new BigDecimal(inx);
     BigDecimal y=new BigDecimal(iny);
@@ -86,38 +90,18 @@ public class JavaPlot3d extends JFrame {
     MathContext mc = new MathContext(4);
     BigDecimal z=new BigDecimal("1");
     try{
-      z = x.pow(y.intValue(),mc);
+      z = BigDecimalMath.pow(x,y);
     }catch (Exception e) {
       z = BigDecimal.valueOf(0);
     }
     return(z);
   }
+
+
   public int[] hex(BigDecimal z){
     int[] rgbtmp = {0,0,0};
     int iz = z.intValue();
-    /*if(z<0){
-      z = 256*256*256-z;
-    }
-    int iz = (int) z;
 
-    int b = iz%256;
-    rgbtmp[2] = b;
-    iz = iz-b;
-    System.out.println(iz);
-    if(iz>0){
-      int g = iz%(256*256);
-      rgbtmp[1] = g;
-      iz = iz-g;
-    }
-    if(iz>0){
-      int r = iz%(256*256*256);
-      rgbtmp[0] = r;
-      iz = iz-r;
-    }
-
-    if(rgbtmp[0]>=256){
-      rgbtmp[0] = 255;
-    }*/
     if(iz<0){
       iz = 256*256*256+iz;
     }
@@ -128,37 +112,6 @@ public class JavaPlot3d extends JFrame {
     rgbtmp[1] = (int) Long.parseLong(hex.substring(hex.length()-4,hex.length()-2), 16);
     if(iz>256*256*256)
     rgbtmp[0] = (int) Long.parseLong(hex.substring(hex.length()-6,hex.length()-4), 16);
-
-
-    /*
-    if(iz>=256){
-      rgbtmp[2] = iz - ((int)(iz/256))*256;
-      iz = ((int)(iz/256));
-      System.out.println(iz);
-    }
-    else{
-      rgbtmp[2] = iz;
-    }
-
-    if(iz>=256){
-      rgbtmp[1] = iz - ((int)(iz/256))*256;
-      iz = ((int)(iz/256))*256;
-      System.out.println(iz);
-    }
-
-    if(iz>=256){
-      rgbtmp[0] = iz - ((int)(iz/256))*256;
-      iz = ((int)(iz/256))*256;
-      System.out.println(iz);
-    }
-    if(rgbtmp[0]>=256){
-      //rgbtmp = hex(iz);
-      rgbtmp[0]=255;
-    }
-    if(rgbtmp[2] < 0){
-      rgbtmp[2] = 0;
-    }*/
-
 
     System.out.println(z + " " +rgbtmp[0] + " " + rgbtmp[1] + " "+  rgbtmp[2]);
     return(rgbtmp);
@@ -176,7 +129,7 @@ static int dimy = 400;
     scale = Double.parseDouble(a[0]); //bigger for 'zoom out'
     posx = Integer.parseInt(a[1]) -dimx/2;//goes right
     posy = Integer.parseInt(a[2]) -dimy/2;//goes down
-    JavaPlot3d myobject = new JavaPlot3d();//change this
+    JavaPlot3dBig myobject = new JavaPlot3dBig();//change this
   	   	// adapter to handle only windowClosing event
         myobject.addWindowListener(
   			   new WindowAdapter() {
