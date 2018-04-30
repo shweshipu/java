@@ -37,8 +37,9 @@ public class JavaPlot3d extends JFrame {
       for (x = 0 + posx;x <dimx + posx;x++){
         for (y = 0 + posy; y < dimy + posy;y++){
           iRed = 0; iGreen = 0; iBlue = 0;
-          rgb = hex(funct(x,y));
+          rgb = hex(funct(x,-y));
           //get the z value
+          /*
           iGreen = ((int)funct(x,y));
           //fix bounds with other colors
           if (iGreen>255){
@@ -56,12 +57,14 @@ public class JavaPlot3d extends JFrame {
           if(funct(x,y) == 1){//color one
             iRed = 127; iGreen = 127; iBlue = 127;
           }
+          */
           //g.setColor(new Color(iRed,iGreen,iBlue));
           g.setColor(new Color(rgb[0],rgb[1],rgb[2]));
           g.drawLine(x-posx,y+30-posy,x-posx,y+30-posy);
 
         }
       }
+
     //make axis
      posx += dimx/2;
      posy += dimy/2;
@@ -87,8 +90,8 @@ public class JavaPlot3d extends JFrame {
               *2
       *255/400
       */
-      Math.pow(x,y)
-      //x*y
+      //Math.pow(x,y)
+      x*y
 
     ));
   }
@@ -118,16 +121,22 @@ public class JavaPlot3d extends JFrame {
     if(rgbtmp[0]>=256){
       rgbtmp[0] = 255;
     }*/
-    if(iz<0){
-      iz = 256*256*256+iz;
+    while(iz<0){
+      iz += 256*256*256;
     }
     String hex=Integer.toHexString(iz);
-    if(iz>256)
-    rgbtmp[2] = (int) Long.parseLong(hex.substring(hex.length()-2,hex.length()), 16);
-    if(iz>256*256)
-    rgbtmp[1] = (int) Long.parseLong(hex.substring(hex.length()-4,hex.length()-2), 16);
-    if(iz>256*256*256)
-    rgbtmp[0] = (int) Long.parseLong(hex.substring(hex.length()-6,hex.length()-4), 16);
+    //System.out.println(hex + "  " + iz);
+
+    hex ="0" + hex;
+    if(iz>0){
+      rgbtmp[2] = (int) Long.parseLong(hex.substring(hex.length()-2,hex.length()), 16);
+    }
+    if(iz>256-1){
+      rgbtmp[1] = (int) Long.parseLong(hex.substring(hex.length()-4,hex.length()-2), 16);
+    }
+    if(iz>256*256-1){
+      rgbtmp[0] = (int) Long.parseLong(hex.substring(hex.length()-6,hex.length()-4), 16);
+    }
 
 
     /*
@@ -160,7 +169,7 @@ public class JavaPlot3d extends JFrame {
     }*/
 
 
-    System.out.println(z + " " +rgbtmp[0] + " " + rgbtmp[1] + " "+  rgbtmp[2]);
+    //System.out.println(z + " " +rgbtmp[0] + " " + rgbtmp[1] + " "+  rgbtmp[2]);
     return(rgbtmp);
   }
 
@@ -169,13 +178,13 @@ static int rgb[] = new int[3];
 static double scale = 1;
 static int posx = 0;
 static int posy = 0;
-static int dimx = 400;
-static int dimy = 400;
+static int dimx = 1000;
+static int dimy = 1000;
   public static void main( String a[] ){
 
     scale = Double.parseDouble(a[0]); //bigger for 'zoom out'
     posx = Integer.parseInt(a[1]) -dimx/2;//goes right
-    posy = Integer.parseInt(a[2]) -dimy/2;//goes down
+    posy = Integer.parseInt(a[2])*-1 -dimy/2;//goes down
     JavaPlot3d myobject = new JavaPlot3d();//change this
   	   	// adapter to handle only windowClosing event
         myobject.addWindowListener(
