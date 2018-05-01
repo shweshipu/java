@@ -68,19 +68,19 @@ public class JavaPlot3dBig extends JFrame {
     BigDecimal y=new BigDecimal(iny);
     x =x.multiply(BigDecimal.valueOf(scale));
     y =y.multiply(BigDecimal.valueOf(scale));
-    System.out.println(x + " " + y);
+    //System.out.println(x + " " + y);
     MathContext mc = new MathContext(4);
     BigDecimal z=new BigDecimal("1");
-    /*try{
-      z = BigDecimalMath.pow(x,y);
+    try{
+      z = x.divide(y);
     }catch (Exception e) {
       z = BigDecimal.valueOf(0);
-    }*/
+    }
 
 
     //z = x.multiply(y);
     //z = x.multiply(x).multiply(x).add(y.multiply(y).multiply(y));
-    z = x.multiply(x).add(y.multiply(y));
+    //z = x.multiply(x).add(y.multiply(y));
 
     return(z);
   }
