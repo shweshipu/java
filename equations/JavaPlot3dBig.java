@@ -38,6 +38,7 @@ public class JavaPlot3dBig extends JFrame {
       //Graph 3d
       for (x = 0 + posx;x <dimx + posx;x++){
         for (y = 0 + posy; y < dimy + posy;y++){
+          System.out.println(x + " " + y);
           iRed = 0; iGreen = 0; iBlue = 0;
           rgb = hex(funct(x,-y));
 
@@ -82,10 +83,33 @@ public class JavaPlot3dBig extends JFrame {
     //z = x.multiply(x).multiply(x).add(y.multiply(y).multiply(y));
     //z = x.multiply(x).add(y.multiply(y));
     //z = x.multiply(x).subtract(y.multiply(y));
-    z = x.sin();
+    //z = x.multiply(x).multiply(x).subtract(y.multiply(y).multiply(y));
+    z = julia(x,y);
     return(z);
   }
-
+  public BigDecimal julia(BigDecimal x , BigDecimal y){
+    // y is bi
+    // x is a
+    // from coleman's juliaplot.java
+    int iterations = 1000;
+    BigDecimal z=new BigDecimal("0");
+    BigDecimal x2=new BigDecimal("0");
+    int k = 0;
+    int limit = 1000; // important? need to have manipulatable? is this z ?
+    BigDecimal c=new BigDecimal("-1");
+    BigDecimal ci=new BigDecimal("0");
+    do {
+      x2 = x.multiply(x).subtract( y.multiply(y)).add(c);
+      y = x.multiply(y).multiply(BigDecimal.valueOf(2)).add(ci);
+      x = x2;
+      z = x.multiply(x).add(y.multiply(y));
+      k++;
+    }while ((k < iterations) & ( -1 == z.compareTo(BigDecimal.valueOf(4.0))));
+    if (k > limit) {
+      return(BigDecimal.valueOf(k));
+    }
+    return(BigDecimal.valueOf(0));
+  }
 
   public int[] hex(BigDecimal z){
     int[] rgbtmp = {0,0,0};

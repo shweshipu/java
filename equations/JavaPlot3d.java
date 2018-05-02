@@ -94,6 +94,7 @@ public class JavaPlot3d extends JFrame {
       //x*y
       //Math.cos(Math.sqrt(x*x + y*y)/62.8)*128+128
       //Math.cos(Math.sqrt(x*x + y*y)/62.8)*128+128
+      Math.log(y)/Math.log(x) // 0.01
 
     ));
   }
