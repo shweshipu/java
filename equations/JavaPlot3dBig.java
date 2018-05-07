@@ -96,19 +96,19 @@ public class JavaPlot3dBig extends JFrame {
     BigDecimal x2=new BigDecimal("0");
     int k = 0;
     int limit = 1000; // important? need to have manipulatable? is this z ?
-    BigDecimal c=new BigDecimal("-1");
-    BigDecimal ci=new BigDecimal("0");
+    BigDecimal c=new BigDecimal(inc);
+    BigDecimal ci=new BigDecimal(inci);
+    MathContext RoundContext = new MathContext(3, RoundingMode.HALF_UP);
     do {
       x2 = x.multiply(x).subtract( y.multiply(y)).add(c);
       y = x.multiply(y).multiply(BigDecimal.valueOf(2)).add(ci);
       x = x2;
       z = x.multiply(x).add(y.multiply(y));
       k++;
+      x = x.round(RoundContext);
+      y = y.round(RoundContext);
     }while ((k < iterations) & ( -1 == z.compareTo(BigDecimal.valueOf(4.0))));
-    if (k > limit) {
-      return(BigDecimal.valueOf(k));
-    }
-    return(BigDecimal.valueOf(0));
+    return(BigDecimal.valueOf(k * 1000));
   }
 
   public int[] hex(BigDecimal z){
@@ -141,11 +141,15 @@ static int posx = 0;
 static int posy = 0;
 static int dimx = 1000;
 static int dimy = 1000;
+static double inc = 0.2;
+static double inci = 0.2;
   public static void main( String a[] ){
 
     scale = Double.parseDouble(a[0]); //bigger for 'zoom out'
     posx = Integer.parseInt(a[1]) -dimx/2;//goes right
     posy = Integer.parseInt(a[2]) * -1 -dimy/2;//goes down
+    inc = Double.parseDouble(a[3]);
+    inci = Double.parseDouble(a[4]);
     JavaPlot3dBig myobject = new JavaPlot3dBig();//change this
   	   	// adapter to handle only windowClosing event
         myobject.addWindowListener(
