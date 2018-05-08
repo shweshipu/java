@@ -145,6 +145,10 @@ static double inc = 0.2;
 static double inci = 0.2;
   public static void main( String a[] ){
 
+    /*
+    todo: put this stuff in 
+    http://www.edu4java.com/en/game/game4.html
+    */
     scale = Double.parseDouble(a[0]); //bigger for 'zoom out'
     posx = Integer.parseInt(a[1]) -dimx/2;//goes right
     posy = Integer.parseInt(a[2]) * -1 -dimy/2;//goes down
