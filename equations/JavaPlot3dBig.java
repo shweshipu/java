@@ -38,7 +38,7 @@ public class JavaPlot3dBig extends JFrame {
       //Graph 3d
       for (x = 0 + posx;x <dimx + posx;x++){
         for (y = 0 + posy; y < dimy + posy;y++){
-          System.out.println(x + " " + y);
+          //System.out.println(x + " " + y);
           iRed = 0; iGreen = 0; iBlue = 0;
           rgb = hex(funct(x,-y));
 
@@ -91,11 +91,11 @@ public class JavaPlot3dBig extends JFrame {
     // y is bi
     // x is a
     // from coleman's juliaplot.java
-    int iterations = 1000;
+    int iterations = 1000000;
     BigDecimal z=new BigDecimal("0");
     BigDecimal x2=new BigDecimal("0");
     int k = 0;
-    int limit = 1000; // important? need to have manipulatable? is this z ?
+    int limit = iterations; // important? need to have manipulatable? is this z ?
     BigDecimal c=new BigDecimal(inc);
     BigDecimal ci=new BigDecimal(inci);
     do {
@@ -108,7 +108,7 @@ public class JavaPlot3dBig extends JFrame {
       x = x.setScale(5,RoundingMode.HALF_UP);
       y = y.setScale(5,RoundingMode.HALF_UP);
     }while ((k < iterations) & ( -1 == z.compareTo(BigDecimal.valueOf(4.0))));
-    return(BigDecimal.valueOf(k * 10000));
+    return(BigDecimal.valueOf(k * 1000));
   }
 
   public int[] hex(BigDecimal z){
