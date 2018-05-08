@@ -98,17 +98,17 @@ public class JavaPlot3dBig extends JFrame {
     int limit = 1000; // important? need to have manipulatable? is this z ?
     BigDecimal c=new BigDecimal(inc);
     BigDecimal ci=new BigDecimal(inci);
-    MathContext RoundContext = new MathContext(3, RoundingMode.HALF_UP);
     do {
       x2 = x.multiply(x).subtract( y.multiply(y)).add(c);
       y = x.multiply(y).multiply(BigDecimal.valueOf(2)).add(ci);
       x = x2;
       z = x.multiply(x).add(y.multiply(y));
       k++;
-      x = x.round(RoundContext);
-      y = y.round(RoundContext);
+      //System.out.println(x +" "+ y + " " + z);
+      x = x.setScale(5,RoundingMode.HALF_UP);
+      y = y.setScale(5,RoundingMode.HALF_UP);
     }while ((k < iterations) & ( -1 == z.compareTo(BigDecimal.valueOf(4.0))));
-    return(BigDecimal.valueOf(k * 1000));
+    return(BigDecimal.valueOf(k * 10000));
   }
 
   public int[] hex(BigDecimal z){
