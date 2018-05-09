@@ -10,6 +10,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.lang.Math;
 import java.math.*;
+//import KeyboardExample.java;
 //import lib.*;
 
 public class JavaPlot3dBig extends JFrame {
@@ -144,17 +145,19 @@ static int dimy = 1000;
 static double inc = 0.2;
 static double inci = 0.2;
   public static void main( String a[] ){
-
-    /*
-    todo: put this stuff in 
-    http://www.edu4java.com/en/game/game4.html
-    */
     scale = Double.parseDouble(a[0]); //bigger for 'zoom out'
     posx = Integer.parseInt(a[1]) -dimx/2;//goes right
     posy = Integer.parseInt(a[2]) * -1 -dimy/2;//goes down
     inc = Double.parseDouble(a[3]);
     inci = Double.parseDouble(a[4]);
+    int i = 0;
+    KeyboardExample keyboardExample = new KeyboardExample();
+    keyboardExample.x = Integer.parseInt(a[1]);
+    keyboardExample.y = Integer.parseInt(a[2]) * -1;
+    posx = keyboardExample.x -dimx/2;//goes right
+    posy = keyboardExample.y * -1 -dimy/2;//goes down
     JavaPlot3dBig myobject = new JavaPlot3dBig();//change this
+    myobject.add(keyboardExample);
   	   	// adapter to handle only windowClosing event
         myobject.addWindowListener(
   			   new WindowAdapter() {
@@ -162,5 +165,10 @@ static double inci = 0.2;
 				          {System.exit( 0 );}
                 }  // end WindowAdapter
         ); // end call to addWindowListener
+    while(true){
+      posx = keyboardExample.x -dimx/2;//goes right
+      posy = keyboardExample.y * -1 -dimy/2;//goes down
+      myobject.paint();//todo
+    }
    }//end main
  }// end class Painter
