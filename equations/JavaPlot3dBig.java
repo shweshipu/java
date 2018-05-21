@@ -168,7 +168,10 @@ static double inci = 0.2;
     while(true){
       posx = keyboardExample.x -dimx/2;//goes right
       posy = keyboardExample.y * -1 -dimy/2;//goes down
-      myobject.paint();//todo
+      if(keyboardExample.moved){
+        myobject.repaint();//todo
+        keyboardExample.moved = false;
+      }
     }
    }//end main
  }// end class Painter

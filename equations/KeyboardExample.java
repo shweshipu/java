@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 public class KeyboardExample extends JPanel {
 	public int y = 0;
 	public int x = 0;
+	public Boolean moved = false;
 	public KeyboardExample() {
 		KeyListener listener = new MyKeyListener();
 		addKeyListener(listener);
@@ -34,13 +35,29 @@ public class KeyboardExample extends JPanel {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			System.out.println("keyPressed="+KeyEvent.getKeyText(e.getKeyCode()));
-			if(e.getKeyCode == "A")
-				System.out.println("worked");
+			moved = true;
+			if(e.getKeyCode() == KeyEvent.VK_LEFT){
+				x-=10;
+				moved = true;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+				x+=10;
+				moved = true;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_UP){
+				y+=10;
+				moved = true;
+			}
+			if(e.getKeyCode() == KeyEvent.VK_DOWN){
+				y-=10;
+				moved = true;
+			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
+			//System.out.println("keyReleased="+KeyEvent.getKeyText(e.getKeyCode()));
 		}
+
 	}
 }
